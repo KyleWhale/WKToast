@@ -56,12 +56,12 @@ class ViewController: UITableViewController {
     
     @objc
     private func handleTapToDismissToggled() {
-        ToastManager.shared.isTapToDismissEnabled = !ToastManager.shared.isTapToDismissEnabled
+        WKToastManager.shared.isTapToDismissEnabled = !WKToastManager.shared.isTapToDismissEnabled
     }
     
     @objc
     private func handleQueueToggled() {
-        ToastManager.shared.isQueueEnabled = !ToastManager.shared.isQueueEnabled
+        WKToastManager.shared.isQueueEnabled = !WKToastManager.shared.isQueueEnabled
     }
 }
 
@@ -107,7 +107,7 @@ extension ViewController {
                     cell = UITableViewCell(style: .default, reuseIdentifier: ReuseIdentifiers.switchCellId)
                     let tapToDismissSwitch = UISwitch()
                     tapToDismissSwitch.onTintColor = .darkBlue
-                    tapToDismissSwitch.isOn = ToastManager.shared.isTapToDismissEnabled
+                    tapToDismissSwitch.isOn = WKToastManager.shared.isTapToDismissEnabled
                     tapToDismissSwitch.addTarget(self, action: #selector(ViewController.handleTapToDismissToggled), for: .valueChanged)
                     cell?.accessoryView = tapToDismissSwitch
                     cell?.selectionStyle = .none
@@ -119,7 +119,7 @@ extension ViewController {
                     cell = UITableViewCell(style: .default, reuseIdentifier: ReuseIdentifiers.switchCellId)
                     let queueSwitch = UISwitch()
                     queueSwitch.onTintColor = .darkBlue
-                    queueSwitch.isOn = ToastManager.shared.isQueueEnabled
+                    queueSwitch.isOn = WKToastManager.shared.isQueueEnabled
                     queueSwitch.addTarget(self, action: #selector(ViewController.handleQueueToggled), for: .valueChanged)
                     cell?.accessoryView = queueSwitch
                     cell?.selectionStyle = .none
@@ -186,7 +186,7 @@ extension ViewController {
             }
         case 5:
             // Make toast with a custom style
-            var style = ToastStyle()
+            var style = WKToastStyle()
             style.messageFont = UIFont(name: "Zapfino", size: 14.0)!
             style.messageColor = UIColor.red
             style.messageAlignment = .center
@@ -201,13 +201,13 @@ extension ViewController {
         case 7:
             // Show an image view as toast, on center at point (110,110)
             let toastView = UIImageView(image: UIImage(named: "toast.png"))
-            self.navigationController?.view.showToast(toastView, duration: 2.0, point: CGPoint(x: 110.0, y: 110.0))
+            self.navigationController?.view.wk_showToast(toastView, duration: 2.0, point: CGPoint(x: 110.0, y: 110.0))
         case 8:
             // Make toast activity
             if !showingActivity {
-                self.navigationController?.view.makeToastActivity(.center)
+                self.navigationController?.view.wk_makeToastActivity(.center)
             } else {
-                self.navigationController?.view.hideToastActivity()
+                self.navigationController?.view.wk_hideToastActivity()
             }
             
             showingActivity.toggle()
@@ -215,10 +215,10 @@ extension ViewController {
             tableView.reloadData()
         case 9:
             // Hide toast
-            self.navigationController?.view.hideToast()
+            self.navigationController?.view.wk_hideToast()
         case 10:
             // Hide all toasts
-            self.navigationController?.view.hideAllToasts()
+            self.navigationController?.view.wk_hideAllToasts()
         default:
             break
         }
